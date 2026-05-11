@@ -765,7 +765,7 @@
     font-size: 12px;
     color: #999999;
     display: -webkit-box;
-    --webkit-line-clamp: 2;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1299,4 +1299,360 @@
 
 .chat-suggestions {
     flex-wrap: wrap;
+}
+
+/* =========================================
+   RESPONSIVE STABILITY LAYER
+   Keeps the phone-style UI intact while preventing viewport overflow,
+   unreachable buttons, clipped modals, and broken landscape layouts.
+   ========================================= */
+.app-body {
+    min-height: 100dvh;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    overflow: hidden;
+}
+
+.app-container {
+    width: min(100%, 420px);
+    height: min(720px, calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+    min-height: min(650px, calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-width: 0;
+}
+
+.pb-60 {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+}
+
+.p-30 {
+    padding: clamp(18px, 4.5vw, 30px) clamp(14px, 4vw, 20px);
+}
+
+.app-header,
+.chat-header,
+.session-top-bar {
+    padding: clamp(12px, 4vw, 20px);
+    gap: 10px;
+    min-width: 0;
+}
+
+.profile-chip,
+.coach-msg-container,
+.exercise-info,
+.stat-row > *,
+.set-item > *,
+.user-name-large,
+.info-value {
+    min-width: 0;
+}
+
+.profile-chip {
+    flex: 0 1 auto;
+    font-size: clamp(12px, 3.2vw, 14px);
+}
+
+.profile-chip span {
+    max-width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.action-container {
+    padding: 12px clamp(14px, 4vw, 20px) calc(12px + env(safe-area-inset-bottom));
+    flex: 0 0 auto;
+}
+
+.btn-main,
+.survey-btn,
+.day-btn,
+.filter-pill,
+.chat-suggestion-btn {
+    min-height: 44px;
+}
+
+.btn-main {
+    padding: 12px 14px;
+    font-size: clamp(13px, 3.6vw, 16px);
+    white-space: normal;
+}
+
+.bottom-nav {
+    height: calc(60px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-btn {
+    min-width: 0;
+    font-size: clamp(9px, 2.8vw, 10px);
+}
+
+.nav-icon {
+    font-size: clamp(16px, 5vw, 20px);
+}
+
+.days-scroll,
+.workout-info,
+.filter-header,
+.library-list,
+.scrollable-body,
+.chat-area,
+.exercises-scroll {
+    padding-left: clamp(14px, 4vw, 20px);
+    padding-right: clamp(14px, 4vw, 20px);
+}
+
+.days-scroll {
+    gap: clamp(6px, 2.5vw, 10px);
+}
+
+.day-btn {
+    padding: 9px clamp(12px, 4vw, 20px);
+}
+
+.workout-info h2,
+.page-title {
+    font-size: clamp(16px, 5vw, 20px);
+}
+
+.workout-info p,
+.ai-header,
+.filter-pill,
+.ex-name,
+.set-label,
+.set-details,
+.stat-row,
+.coach-msg,
+.ai-content {
+    font-size: clamp(11px, 3.4vw, 14px);
+}
+
+.exercises-scroll,
+.scrollable-body,
+.library-list,
+.chat-area,
+.info-container {
+    min-height: 0;
+}
+
+.ex-card,
+.exercise-card,
+.set-item,
+.stat-row,
+.info-row {
+    gap: 10px;
+    min-width: 0;
+}
+
+.exercise-card {
+    padding: clamp(10px, 3.5vw, 15px);
+}
+
+.exercise-visual {
+    width: clamp(64px, 22vw, 90px);
+    height: clamp(64px, 22vw, 90px);
+    flex: 0 0 auto;
+}
+
+.exercise-info {
+    padding: 8px 0;
+}
+
+.media-container {
+    height: clamp(140px, 30dvh, 260px);
+    flex: 0 0 auto;
+}
+
+.timer,
+.progress-chip {
+    padding: 8px clamp(10px, 3vw, 15px);
+}
+
+.rest-time {
+    font-size: clamp(30px, 12vw, 40px);
+}
+
+.info-container {
+    padding: clamp(12px, 4vw, 20px);
+}
+
+.ex-title {
+    font-size: clamp(18px, 6vw, 24px);
+}
+
+.sets-scroll {
+    max-height: min(180px, 28dvh);
+}
+
+.set-item {
+    padding: clamp(10px, 3.5vw, 15px);
+}
+
+.result-title {
+    font-size: clamp(18px, 5.5vw, 22px);
+}
+
+.duration-display,
+.survey-title {
+    font-size: clamp(14px, 4.2vw, 18px);
+}
+
+.stats-container,
+.summary-metric-card,
+.ai-prediction-box {
+    padding: clamp(12px, 3.5vw, 16px);
+}
+
+.stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.summary-mini-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.summary-mini-grid .stat-val {
+    font-size: clamp(15px, 5vw, 18px);
+}
+
+.weekly-bars {
+    gap: clamp(3px, 1.8vw, 8px);
+    height: clamp(128px, 28dvh, 155px);
+}
+
+.weekly-bar-track {
+    height: clamp(86px, 20dvh, 112px);
+}
+
+.weekly-bar-fill {
+    width: min(18px, 80%);
+}
+
+.library-list {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}
+
+.chat-area {
+    padding-bottom: calc(160px + env(safe-area-inset-bottom));
+}
+
+.msg-bubble {
+    max-width: min(85%, 32rem);
+    font-size: clamp(12px, 3.5vw, 14px);
+}
+
+.input-area {
+    bottom: calc(60px + env(safe-area-inset-bottom));
+    padding: 12px clamp(12px, 4vw, 15px);
+}
+
+.chat-input {
+    min-width: 0;
+    font-size: 16px;
+}
+
+.chat-send {
+    flex: 0 0 40px;
+}
+
+.profile-action-row {
+    flex-wrap: wrap;
+}
+
+.profile-action-row .btn-main {
+    flex: 1 1 140px;
+}
+
+.edit-modal-overlay {
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.edit-modal {
+    max-height: min(88dvh, 720px);
+    width: min(100%, 400px);
+}
+
+.coach-banner {
+    height: auto;
+    max-height: none;
+}
+
+.app-body .result-coach-banner {
+    min-height: 72px;
+}
+
+@media (max-width: 480px) {
+    .app-body {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .app-container,
+    .auth-container {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .coach-banner {
+        padding-left: 56px;
+    }
+
+    .coach-avatar {
+        width: 58px;
+        height: 76px;
+    }
+
+    .summary-mini-grid {
+        gap: 5px;
+    }
+
+    .exercise-card {
+        padding: 10px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+    .app-body {
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .app-container {
+        width: 100%;
+        max-width: none;
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+    }
+
+    .app-header,
+    .session-top-bar,
+    .info-container {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .media-container {
+        height: clamp(110px, 34dvh, 170px);
+    }
+
+    .sets-scroll {
+        max-height: none;
+    }
+
+    .bottom-nav {
+        height: calc(52px + env(safe-area-inset-bottom));
+    }
+
+    .input-area {
+        bottom: calc(52px + env(safe-area-inset-bottom));
+    }
 }

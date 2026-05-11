@@ -5,8 +5,9 @@
     background-size: 200% 200%;
     color: #e0e0e0;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
-    padding: 20px 20px;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
     justify-content: center;
     align-items: center;
     position: relative;
@@ -25,10 +26,11 @@
 }
 
 .auth-container {
-    width: 100%;
+    width: min(100%, 420px);
     max-width: 420px;
-    min-height: 650px; 
-    padding: 40px 40px 100px 40px; 
+    min-height: min(650px, calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom))); 
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding: clamp(22px, 7vw, 40px) clamp(18px, 7vw, 40px) clamp(48px, 12vh, 100px); 
     background: linear-gradient(360deg, #111111 50%, #c91919 100%);
     border-radius: 20px;
     display: flex;
@@ -36,6 +38,15 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.auth-container::-webkit-scrollbar {
+    display: none;
 }
 
 .auth-wrapper {
@@ -47,7 +58,7 @@
 }
 
 .logo-img {
-    width: 250px; 
+    width: clamp(170px, 58vw, 250px); 
     height: auto;
     margin-bottom: 5px;
 }
@@ -83,7 +94,7 @@ input[type="password"] {
     border-radius: 8px; 
     padding: 12px 16px; 
     margin-bottom: 12px;
-    font-size: 14px; 
+    font-size: 16px; 
     outline: none;
 }
 
@@ -121,7 +132,8 @@ input:focus {
     border-radius: 8px; 
     border: none;
     cursor: pointer; 
-    font-size: 16px; 
+    min-height: 48px;
+    font-size: clamp(14px, 4vw, 16px); 
     transition: filter 0.2s;
     margin-top: 15px;
     margin-bottom: 25px;
@@ -186,7 +198,7 @@ input:focus {
 
 .setup-title h2 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 32px;
+    font-size: clamp(24px, 8vw, 32px);
     color: #e0e0e0;
     letter-spacing: 2px;
 }
@@ -197,7 +209,7 @@ input:focus {
 
 .setup-title h3 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 24px;
+    font-size: clamp(18px, 6vw, 24px);
     color: #e0e0e0;
     letter-spacing: 2px;
 }
@@ -254,7 +266,7 @@ input[type="number"] {
     border-radius: 8px;
     padding: 12px 16px;
     margin-bottom: 12px;
-    font-size: 14px;
+    font-size: 16px;
     outline: none;
     font-family: 'Inter', sans-serif;
 }
@@ -265,6 +277,7 @@ input[type="number"] {
     width: 100%;
     max-width: 280px;
     margin-top: 15px;
+    min-width: 0;
 }
 
 .split-input {
@@ -293,7 +306,8 @@ input[type="number"] {
     background: #e3e3e3;
     color: #111111;
     font-weight: 600;
-    font-size: 14px;
+    min-height: 44px;
+    font-size: clamp(12px, 3.5vw, 14px);
     cursor: pointer;
     transition: all 0.2s;
     border-right: 3px solid #2a2a2a;
@@ -323,6 +337,7 @@ input[type="number"] {
     display: flex;
     gap: 6px;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .level-btn {
@@ -333,7 +348,8 @@ input[type="number"] {
     background: #e3e3e3;
     color: #111111;
     font-weight: 600;
-    font-size: 12px;
+    min-height: 44px;
+    font-size: clamp(11px, 3.2vw, 12px);
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
@@ -345,18 +361,19 @@ input[type="number"] {
 /* Grid Buttons (Equipment) */
 .eq-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 3vw, 15px);
 }
 
 .sel-btn {
-    padding: 20px 10px;
+    min-height: 44px;
+    padding: clamp(10px, 4vw, 20px) 10px;
     border-radius: 8px;
     border: none;
     background: #e3e3e3;
     color: #111111;
     font-weight: 600;
-    font-size: 14px;
+    font-size: clamp(12px, 3.5vw, 14px);
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
@@ -376,6 +393,7 @@ input[type="number"] {
     padding: 10px 16px;
     font-size: 13px;
     flex: 1 1 auto;
+    min-width: min(120px, 100%);
 }
 
 .full-width-btn {
@@ -428,12 +446,54 @@ input[type="number"] {
 
 /* Mobile Native App View */
 @media (max-width: 480px) {
+    .auth-body {
+        padding: 0;
+        align-items: stretch;
+    }
+
     .app-container, .auth-container {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
         max-width: none;
         border-radius: 0;
         box-shadow: none;
         padding-top: env(safe-area-inset-top); /* Adjusts for iPhone notches */
+    }
+}
+
+@media (max-width: 360px) {
+    .auth-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .split-row {
+        gap: 8px;
+    }
+
+    .action-row {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+    .auth-body {
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .auth-container {
+        width: 100%;
+        max-width: none;
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        justify-content: flex-start;
+        padding-top: max(14px, env(safe-area-inset-top));
+        padding-bottom: max(18px, env(safe-area-inset-bottom));
     }
 }

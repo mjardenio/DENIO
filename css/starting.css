@@ -975,3 +975,296 @@ input[type="file"].admin-input-full {
     .contact-content h1 { font-size: 32px; }
     .contact-footer { flex-direction: column; width: 100%; max-width: 300px; }
 }
+
+/* =========================================
+   RESPONSIVE STABILITY LAYER
+   Keeps public and admin pages usable on phones, tablets, and landscape.
+   ========================================= */
+main {
+    margin-top: clamp(82px, 14vw, 100px);
+}
+
+.hero {
+    min-height: calc(100dvh - clamp(82px, 14vw, 100px));
+    padding: clamp(32px, 7vw, 72px) clamp(16px, 5vw, 8%);
+}
+
+.hero-left h1,
+.contact-content h1,
+.features-title h2 {
+    font-size: clamp(28px, 7vw, 42px);
+    letter-spacing: 0;
+}
+
+.hero-left p,
+.contact-content p {
+    font-size: clamp(14px, 3.5vw, 18px);
+    max-width: 68ch;
+}
+
+.hero-left .work-btn {
+    min-height: 48px;
+    padding: 14px clamp(20px, 7vw, 40px);
+    font-size: clamp(15px, 4vw, 18px);
+}
+
+.hero-right img {
+    max-height: min(62dvh, 620px);
+}
+
+.features-section {
+    min-height: auto;
+    padding: clamp(72px, 12vw, 120px) clamp(16px, 5vw, 5%) 40px;
+}
+
+.features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: clamp(16px, 4vw, 30px);
+}
+
+.feature-box,
+.contact-content,
+.admin-card {
+    padding: clamp(18px, 5vw, 40px);
+}
+
+.contact-main {
+    padding: clamp(32px, 7vw, 60px) 16px;
+}
+
+.contact-content {
+    width: min(100%, 800px);
+    margin-bottom: 28px;
+}
+
+.contact-footer {
+    width: 100%;
+}
+
+.contact-item {
+    max-width: 100%;
+    justify-content: center;
+}
+
+.admin-light-body {
+    overflow-x: hidden;
+}
+
+.admin-top-nav {
+    min-height: 58px;
+    height: auto;
+    padding: 6px clamp(14px, 4vw, 32px);
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-logo-dark {
+    height: clamp(56px, 12vw, 88px);
+}
+
+.nav-center,
+.admin-controls-row,
+.admin-header-flex,
+.nav-right {
+    min-width: 0;
+}
+
+.nav-center {
+    flex: 1 1 320px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.nav-link {
+    min-height: 38px;
+    padding: 7px clamp(10px, 3vw, 18px);
+    font-size: clamp(12px, 3vw, 14px);
+}
+
+.admin-main-content {
+    margin: clamp(18px, 5vw, 40px) auto;
+    padding: 0 clamp(12px, 4vw, 20px);
+    width: 100%;
+}
+
+.admin-header-flex {
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.admin-page-title {
+    font-size: clamp(22px, 6vw, 30px);
+}
+
+.admin-stats-row,
+.admin-charts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+
+.admin-controls-row {
+    flex-wrap: wrap;
+}
+
+.admin-input-search,
+.admin-select-filter,
+.custom-filter-dropdown,
+.btn-primary-admin {
+    min-height: 44px;
+}
+
+.admin-input-search,
+.admin-select-filter,
+.custom-filter-dropdown {
+    width: auto;
+    flex: 1 1 190px;
+    min-width: 0;
+}
+
+.btn-primary-admin {
+    flex: 0 0 auto;
+}
+
+.notif-dropdown {
+    width: min(320px, calc(100vw - 24px));
+    right: 0;
+}
+
+.profile-dropdown {
+    right: 0;
+}
+
+.placeholder-graph,
+.placeholder-pie {
+    min-height: clamp(180px, 44vw, 235px);
+}
+
+.placeholder-pie {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.admin-pie-legend {
+    min-width: min(180px, 100%);
+}
+
+.table-wrapper,
+.scrollable-table-area {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-table {
+    min-width: 720px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px clamp(10px, 3vw, 20px);
+}
+
+.desc-col {
+    max-width: 220px;
+}
+
+.admin-pagination,
+.admin-delete-actions {
+    flex-wrap: wrap;
+}
+
+.admin-modal-overlay {
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.admin-modal {
+    width: min(100%, 520px);
+    max-height: min(90dvh, 720px);
+}
+
+.modal-header,
+.modal-body {
+    padding: clamp(14px, 4vw, 20px);
+}
+
+.admin-input-full,
+.admin-textarea {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .admin-top-nav {
+        align-items: center;
+    }
+
+    .nav-center {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .admin-top-nav .nav-right {
+        margin-left: auto;
+    }
+
+    .hero {
+        gap: 28px;
+    }
+
+    .hero-right img {
+        max-height: 42dvh;
+    }
+
+    .contact-main {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-card {
+        border-radius: 10px;
+    }
+
+    .admin-controls-row > * {
+        flex: 1 1 100%;
+    }
+
+    .btn-primary-admin {
+        width: 100%;
+    }
+
+    .profile-btn span {
+        display: none;
+    }
+
+    .notif-dropdown,
+    .profile-dropdown {
+        position: fixed;
+        top: calc(58px + env(safe-area-inset-top));
+        left: 12px;
+        right: 12px;
+        width: auto;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+    main {
+        margin-top: 76px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+
+    .hero-right img {
+        max-height: 58dvh;
+    }
+
+    .admin-top-nav {
+        position: static;
+    }
+
+    .admin-modal {
+        max-height: 94dvh;
+    }
+}
