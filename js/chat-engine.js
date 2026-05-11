@@ -57,10 +57,8 @@ function getTextConfig(name, fallback = "") {
 
 function getAiConfig() {
     return {
-        geminiKey: getTextConfig("DENIO_GEMINI_API_KEY"),
-        grokKey: getTextConfig("DENIO_GROK_API_KEY"),
+        geminiKey: getTextConfig("AIzaSyCSsHSEf1k4HzJ_DiqE6FcMA-zuJjuf-_U"),
         geminiModel: getTextConfig("DENIO_GEMINI_MODEL", "gemini-2.0-flash"),
-        grokModel: getTextConfig("DENIO_GROK_MODEL", "grok-4")
     };
 }
 
