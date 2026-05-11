@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO Admin - Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/starting.css">
+</head>
+<body class="admin-light-body">
+
+    <nav class="admin-top-nav">
+        <div class="nav-left"><img src="../assets/FDLSIDE.png" class="admin-logo-dark"></div>
+        <div class="nav-center">
+            <a href="admin-dashboard.html" class="nav-link">Dashboard</a>
+            <a href="admin-user.html" class="nav-link">User Management</a>
+            <a href="admin-library.html" class="nav-link active">Exercise Library</a>
+            <a href="admin-reco.html" class="nav-link">Recommendation System</a>
+        </div>
+        <div class="nav-right">
+            <div class="notif-wrapper" id="notifWrapper"><button class="icon-btn" id="notifBtn">🕭 <span class="notif-badge" id="notifBadge">2</span></button><div class="notif-dropdown" id="notifDropdown"><div class="notif-header">Notifications</div><div class="notif-list"><div class="notif-item new"><span class="indicator"></span><div class="notif-text">New user signed up.</div></div></div></div></div>
+            <div class="profile-wrapper" id="adminProfileWrapper"><button class="icon-btn profile-btn" id="adminProfileBtn"><div class="admin-avatar-circle">A</div><span>Admin</span><small>▼</small></button><div class="profile-dropdown" id="adminDropdown"><button id="adminLogoutBtn">Sign Out</button></div></div>
+        </div>
+    </nav>
+
+    <div class="admin-main-content">
+        <div class="admin-header-flex">
+            <h2 class="admin-page-title">Exercise <span class="text-red">Library</span></h2>
+            <div class="admin-controls-row">
+                <input type="text" class="admin-input-search" id="adminExerciseSearch" placeholder="Search exercise name...">
+                
+                <div class="custom-filter-dropdown" id="muscleFilterBtn">
+                    Filter Muscle Group ▼
+                    <div class="filter-dropdown-menu" id="muscleFilterMenu">
+                        <div class="admin-chip lib-filter-chip">Abs</div>
+                        <div class="admin-chip lib-filter-chip">Arms</div>
+                        <div class="admin-chip lib-filter-chip">Back</div>
+                        <div class="admin-chip lib-filter-chip">Chest</div>
+                        <div class="admin-chip lib-filter-chip">Glutes</div>
+                        <div class="admin-chip lib-filter-chip">Legs</div>
+                        <div class="admin-chip lib-filter-chip">Shoulders</div>
+                        <div class="admin-chip lib-filter-chip">Full Body</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary-admin" id="addExerciseBtn">+ Add Exercise</button>
+            </div>
+        </div>
+
+        <div class="admin-card table-wrapper scrollable-table-area">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Exercise Name</th>
+                        <th>Description</th>
+                        <th class="col-center">Muscle Group</th>
+                        <th class="col-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminExerciseList">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
+                            Loading database...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="exerciseModal">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3 id="exerciseModalTitle">Add Exercise</h3>
+                <button class="close-modal" id="closeExModal">✖</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="adminExerciseId">
+                <input type="text" id="adminExerciseName" class="admin-input-full" placeholder="Exercise Name">
+                <p class="modal-subtitle">Primary Muscle</p>
+                <select id="adminPrimaryMuscle" class="admin-input-full">
+                    <option value="">Select primary muscle</option>
+                    <option>Abs</option>
+                    <option>Arms</option>
+                    <option>Back</option>
+                    <option>Chest</option>
+                    <option>Glutes</option>
+                    <option>Legs</option>
+                    <option>Shoulders</option>
+                    <option>Full Body</option>
+                </select>
+                <p class="modal-subtitle">Equipment</p>
+                <input type="hidden" id="adminExerciseEquipment">
+                <div class="chip-container equipment-chip-container" id="adminExerciseEquipmentGroup">
+                    <div class="admin-chip" data-value="FULL GYM">FULL GYM</div>
+                    <div class="admin-chip" data-value="BARBELLS">BARBELLS</div>
+                    <div class="admin-chip" data-value="DUMBBELLS">DUMBBELLS</div>
+                    <div class="admin-chip" data-value="KETTLE BELLS">KETTLE BELLS</div>
+                    <div class="admin-chip" data-value="MACHINES">MACHINES</div>
+                    <div class="admin-chip" data-value="NONE">NONE</div>
+                </div>
+                <p class="modal-subtitle" style="margin-top:0;">Image/GIF Web Link:</p>
+                <input type="url" id="adminExUrl" class="admin-input-full" placeholder="Paste URL (e.g., https://...)">
+                <p class="modal-subtitle">Description</p>
+                <textarea id="adminExerciseDescription" class="admin-textarea" placeholder="Short Description"></textarea>
+                <p class="modal-subtitle">Form Tips</p>
+                <textarea id="adminExerciseTips" class="admin-textarea" placeholder="Form tips and coaching cues"></textarea>
+                
+                <button class="btn-primary-admin mt-20" id="saveExerciseBtn" style="width: 100%;">Save Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="deleteExerciseModal">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3>Delete Exercise</h3>
+                <button class="close-modal" id="closeDeleteExerciseModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:#555; margin-top:0;">Delete <strong id="deleteExerciseName">this exercise</strong> from the shared library?</p>
+                <p style="color:#888; font-size:13px;">This removes it from user library, homepage hydration, and active session sync after Firestore updates.</p>
+                <div class="admin-delete-actions">
+                    <button class="btn-primary-admin" id="cancelDeleteExerciseBtn" style="background:#888;">Cancel</button>
+                    <button class="btn-primary-admin" id="confirmDeleteExerciseBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script src="../js/starting.js"></script> <script type="module" src="../js/admin-library.js"></script>
+</body>
+</html>

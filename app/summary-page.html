@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO - Summary</title>
+    
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body class="app-body">
+    <div class="app-container pb-60">
+        
+        <div class="app-header">
+            <img src="../assets/FLOGO.png" alt="DENIO Logo" class="app-logo">
+            <div class="profile-chip" onclick="window.location.href='profile-view.html'" style="cursor: pointer;">
+                <span>User</span>
+                <div class="profile-img">U</div>
+            </div>
+        </div>
+
+        <div class="scrollable-body">
+            <h1 class="page-title">WORKOUT SUMMARY</h1>
+            
+            <div class="summary-metrics">
+                <div class="summary-metric-card">
+                    <div class="summary-card-title">Consistency</div>
+                    <div class="summary-mini-grid">
+                        <div>
+                            <div class="stat-val" id="currentStreak">0</div>
+                            <div class="stat-label">Current Streak</div>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="daysLifted">0</div>
+                            <div class="stat-label">Days Lifted</div>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="missedWorkouts">0</div>
+                            <div class="stat-label">Missed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-metric-card">
+                    <div class="summary-card-title">Workout Time</div>
+                    <div class="summary-mini-grid">
+                        <div>
+                            <div class="stat-val" id="longSession">00:00:00</div>
+                            <div class="stat-label">Longest</div>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="avgSession">00:00:00</div>
+                            <div class="stat-label">Average</div>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="shortSession">00:00:00</div>
+                            <div class="stat-label">Shortest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-prediction-box">
+                <div class="ai-header">
+                     AI Predictive Analysis
+                </div>
+                <div class="ai-content" id="aiPredictionText">
+                    Based on your consistency over the last 4 weeks, you are on track to hit your hypertrophy goals 12% faster than average. Consider increasing your protein intake to support the higher volume in your upcoming blocks.
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="nav-btn" onclick="window.location.href='homepage.html'">
+                <div class="nav-icon">🏠︎</div>Home
+            </button>
+            <button class="nav-btn active" onclick="window.location.href='summary-page.html'">
+                <div class="nav-icon">☰</div>Summary
+            </button>
+            <button class="nav-btn" onclick="window.location.href='library-page.html'">
+                <div class="nav-icon">🕮</div>Library
+            </button>
+            <button class="nav-btn" onclick="window.location.href='chat-page.html'">
+                <div class="nav-icon">🗫</div>Chat
+            </button>
+        </div>
+        
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

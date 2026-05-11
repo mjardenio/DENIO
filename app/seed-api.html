@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO Master Database Setup</title>
+    <style>
+        body { background: #111; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center;}
+        .container { background: #1a1a1a; padding: 40px; border-radius: 12px; width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        button { background: #e63946; color: white; border: none; padding: 15px; width: 100%; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #ff4a5a; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        #status { margin-top: 20px; font-size: 14px; color: #aaa; }
+        .progress-bar { width: 100%; height: 10px; background: #333; border-radius: 5px; margin-top: 15px; overflow: hidden; display: none; }
+        .progress-fill { height: 100%; background: #4ade80; width: 0%; transition: width 0.1s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 style="margin-top:0; color: #e63946;">Local Database Injector</h2>
+        <p style="font-size: 14px; color: #ccc;">Uploads 50 flawlessly categorized exercises directly to Firestore. No APIs needed.</p>
+        
+        <button id="seedBtn">Inject 50 Exercises</button>
+        
+        <div class="progress-bar" id="progBar"><div class="progress-fill" id="progFill"></div></div>
+        <div id="status">Waiting to start...</div>
+    </div>
+
+    <script type="module">
+        import { db } from '../js/firebase.js'; 
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 🔥 THE PERFECT 50-EXERCISE DATABASE
+        const exercises = [
+            // === CHEST (7) ===
+            { name: "Barbell Bench Press", description: "Classic compound push for overall chest mass.", muscle_group: "Chest", equipment: ["BARBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Lie on a flat bench. Lower bar to mid-chest, push back up.", advice: "Keep feet flat and maintain a slight arch in your back.", gif_url: "../assets/exercises/bench-press.gif" },
+            { name: "Dumbbell Flyes", description: "Isolation movement stretching the pectorals.", muscle_group: "Chest", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Lie on bench. Lower weights in a wide arc, squeeze chest to return.", advice: "Imagine hugging a large tree. Don't drop elbows below shoulders.", gif_url: "../assets/exercises/dumbbell-flyes.gif" },
+            { name: "Push Ups", description: "The ultimate bodyweight chest builder.", muscle_group: "Chest", equipment: ["NONE", "FULL GYM"], goals: ["Improve Overall Fitness & Health", "Tone Body", "Increase Strength"], instructions: "Hands shoulder-width apart. Lower chest to floor, push up.", advice: "Keep elbows tucked at a 45-degree angle.", gif_url: "../assets/exercises/pushup.gif" },
+            { name: "Incline Dumbbell Press", description: "Targets the upper chest and front deltoids.", muscle_group: "Chest", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Set bench to 30 degrees. Press dumbbells upward.", advice: "Don't clink dumbbells at the top; keep constant tension.", gif_url: "../assets/exercises/incline-db-press.gif" },
+            { name: "Cable Crossovers", description: "Constant tension isolation for the inner chest.", muscle_group: "Chest", equipment: ["MACHINES", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Pull high cable handles down and together in front of you.", advice: "Squeeze your chest hard for a full second at the bottom.", gif_url: "../assets/exercises/cable-crossover.gif" },
+            { name: "Decline Barbell Press", description: "Focuses on the lower pectoral muscles.", muscle_group: "Chest", equipment: ["BARBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Lie on a decline bench. Lower bar to lower chest, press up.", advice: "Ensure your legs are securely locked into the bench.", gif_url: "../assets/exercises/decline-press.gif" },
+            { name: "Pec Deck Machine", description: "Safe and effective chest isolation.", muscle_group: "Chest", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Improve Overall Fitness & Health"], instructions: "Sit at machine. Squeeze handles together in front of your chest.", advice: "Keep your back flat against the pad.", gif_url: "../assets/exercises/pec-deck.gif" },
+
+            // === BACK (8) ===
+            { name: "Lat Pulldown", description: "Machine pull for a wide back.", muscle_group: "Back", equipment: ["MACHINES", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Sit and pull the wide bar down to your upper chest.", advice: "Pull with your back, not your biceps. Chest up.", gif_url: "../assets/exercises/lat-pulldown.gif" },
+            { name: "Pull Ups", description: "Bodyweight vertical pull.", muscle_group: "Back", equipment: ["NONE", "FULL GYM", "MACHINES"], goals: ["Increase Strength", "Improve Athleticism"], instructions: "Overhand grip. Pull body up until chin clears the bar.", advice: "Control the descent. Do not drop rapidly.", gif_url: "../assets/exercises/pullup.gif" },
+            { name: "Barbell Row", description: "Heavy compound pull for back thickness.", muscle_group: "Back", equipment: ["BARBELLS", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass"], instructions: "Hinge at hips. Pull barbell to your stomach.", advice: "Keep core braced tight. Don't jerk the weight.", gif_url: "../assets/exercises/bb-row.gif" },
+            { name: "Seated Cable Row", description: "Horizontal pull for mid-back details.", muscle_group: "Back", equipment: ["MACHINES", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Sit at station. Pull handle to lower stomach, squeezing shoulder blades.", advice: "Keep torso relatively upright; do not swing back.", gif_url: "../assets/exercises/seated-row.gif" },
+            { name: "Single Arm Dumbbell Row", description: "Unilateral pull to fix imbalances.", muscle_group: "Back", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Improve Athleticism"], instructions: "Support body on bench. Pull dumbbell to your hip.", advice: "Pull elbow straight back, not up to your ear.", gif_url: "../assets/exercises/db-row.gif" },
+            { name: "Chin Ups", description: "Underhand pull-up targeting lats and biceps.", muscle_group: "Back", equipment: ["NONE", "FULL GYM"], goals: ["Increase Strength", "Tone Body"], instructions: "Underhand grip. Pull body up until chest meets bar.", advice: "Focus on driving your elbows down to the floor.", gif_url: "../assets/exercises/chinup.gif" },
+            { name: "T-Bar Row", description: "Heavy mid-back compound movement.", muscle_group: "Back", equipment: ["BARBELLS", "MACHINES", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass"], instructions: "Straddle the bar, hinge hips, pull handles to chest.", advice: "Use smaller plates for better range of motion.", gif_url: "../assets/exercises/tbar-row.gif" },
+            { name: "Straight Arm Pulldown", description: "Lat isolation without bicep involvement.", muscle_group: "Back", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Improve Athleticism"], instructions: "Stand at cable. Keep arms straight and push bar down to thighs.", advice: "Keep a slight bend in the elbow but lock the joint in place.", gif_url: "../assets/exercises/straight-arm-pull.gif" },
+
+            // === LEGS (10) ===
+            { name: "Barbell Squat", description: "The king of lower body exercises.", muscle_group: "Legs", equipment: ["BARBELLS", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass", "Improve Athleticism"], instructions: "Bar on upper back. Lower until thighs parallel to floor, stand up.", advice: "Keep chest up and knees tracking over toes.", gif_url: "../assets/exercises/squat.gif" },
+            { name: "Deadlift", description: "Full posterior chain builder.", muscle_group: "Legs", equipment: ["BARBELLS", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass"], instructions: "Hinge at hips. Lift bar by extending hips and knees.", advice: "Keep the bar scraping your shins on the way up.", gif_url: "../assets/exercises/deadlift.gif" },
+            { name: "Dumbbell Lunges", description: "Unilateral leg developer.", muscle_group: "Legs", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Tone Body", "Improve Athleticism"], instructions: "Step forward, lower hips until knees form 90-degree angles.", advice: "Keep torso upright.", gif_url: "../assets/exercises/lunges.gif" },
+            { name: "Leg Press", description: "Machine-based heavy quad builder.", muscle_group: "Legs", equipment: ["MACHINES", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Sit in machine. Lower platform to chest, press up.", advice: "Never fully lock out your knees at the top.", gif_url: "../assets/exercises/leg-press.gif" },
+            { name: "Goblet Squat", description: "Great for deep squat form.", muscle_group: "Legs", equipment: ["KETTLE BELLS", "DUMBBELLS", "FULL GYM"], goals: ["Improve Overall Fitness & Health", "Tone Body"], instructions: "Hold weight at chest. Squat down low.", advice: "Keep elbows inside your knees at the bottom.", gif_url: "../assets/exercises/goblet-squat.gif" },
+            { name: "Calf Raises", description: "Isolation for the lower leg.", muscle_group: "Legs", equipment: ["MACHINES", "DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Stand on edge of a step. Drop heels, press up onto toes.", advice: "Pause for one second at the very top.", gif_url: "../assets/exercises/calf-raise.gif" },
+            { name: "Romanian Deadlift", description: "Targets hamstrings and glutes.", muscle_group: "Legs", equipment: ["BARBELLS", "DUMBBELLS", "FULL GYM"], goals: ["Increase Strength", "Improve Athleticism"], instructions: "Slight bend in knees. Hinge hips back while lowering weight.", advice: "You should feel a deep stretch in your hamstrings.", gif_url: "../assets/exercises/rdl.gif" },
+            { name: "Leg Extensions", description: "Isolation for the quadriceps.", muscle_group: "Legs", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Build Muscle & Mass"], instructions: "Sit in machine. Extend legs fully.", advice: "Squeeze your quads at the top of the movement.", gif_url: "../assets/exercises/leg-extension.gif" },
+            { name: "Hamstring Curls", description: "Isolation for the back of the legs.", muscle_group: "Legs", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Build Muscle & Mass"], instructions: "Lie face down or sit. Curl weight toward your glutes.", advice: "Control the weight on the way back down.", gif_url: "../assets/exercises/hamstring-curl.gif" },
+            { name: "Bulgarian Split Squat", description: "Intense single-leg balance and strength.", muscle_group: "Legs", equipment: ["DUMBBELLS", "NONE", "FULL GYM"], goals: ["Improve Athleticism", "Increase Strength"], instructions: "Rest back foot on bench. Lower hips until front thigh is parallel.", advice: "Lean slightly forward to target the glutes more.", gif_url: "../assets/exercises/bulgarian.gif" },
+
+            // === SHOULDERS (7) ===
+            { name: "Overhead Press", description: "Primary push for shoulder size.", muscle_group: "Shoulders", equipment: ["DUMBBELLS", "BARBELLS", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass"], instructions: "Press weights straight up overhead.", advice: "Keep core tight to protect lower back.", gif_url: "../assets/exercises/shoulder-press.gif" },
+            { name: "Lateral Raises", description: "Builds shoulder width.", muscle_group: "Shoulders", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Tone Body", "Build Muscle & Mass"], instructions: "Raise arms to the sides until shoulder height.", advice: "Lead with elbows, like pouring a pitcher of water.", gif_url: "../assets/exercises/lateral-raise.gif" },
+            { name: "Face Pulls", description: "Crucial for rear delts and posture.", muscle_group: "Shoulders", equipment: ["MACHINES", "FULL GYM"], goals: ["Improve Overall Fitness & Health", "Improve Athleticism"], instructions: "Pull cable rope toward your face, separating hands.", advice: "Squeeze rear delts and upper back at the end.", gif_url: "../assets/exercises/face-pull.gif" },
+            { name: "Front Raises", description: "Targets anterior deltoids.", muscle_group: "Shoulders", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Tone Body"], instructions: "Raise weight straight out in front to eye level.", advice: "Do not use momentum; keep strict form.", gif_url: "../assets/exercises/front-raise.gif" },
+            { name: "Arnold Press", description: "Rotating press for 3D shoulders.", muscle_group: "Shoulders", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass"], instructions: "Start palms facing you. Press up and rotate palms away.", advice: "Keep the rotation smooth and fluid.", gif_url: "../assets/exercises/arnold-press.gif" },
+            { name: "Upright Rows", description: "Targets upper traps and side delts.", muscle_group: "Shoulders", equipment: ["BARBELLS", "DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass"], instructions: "Pull weight up vertically in front of your torso.", advice: "Pull elbows higher than your wrists.", gif_url: "../assets/exercises/upright-row.gif" },
+            { name: "Reverse Pec Deck", description: "Machine isolation for rear delts.", muscle_group: "Shoulders", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Improve Overall Fitness & Health"], instructions: "Sit facing machine. Pull handles backward in an arc.", advice: "Don't squeeze shoulder blades; focus entirely on the shoulder muscle.", gif_url: "../assets/exercises/reverse-pec-deck.gif" },
+
+            // === ARMS (8) ===
+            { name: "Bicep Curls", description: "Classic isolation for biceps.", muscle_group: "Arms", equipment: ["DUMBBELLS", "BARBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Keep upper arm still, curl weight up.", advice: "Do not swing your back.", gif_url: "../assets/exercises/bicep-curl.gif" },
+            { name: "Tricep Pushdown", description: "Cable isolation for triceps.", muscle_group: "Arms", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body", "Build Muscle & Mass"], instructions: "Push cable down until arms extend.", advice: "Glue elbows to your ribs.", gif_url: "../assets/exercises/tricep-pushdown.gif" },
+            { name: "Hammer Curls", description: "Builds biceps and brachialis.", muscle_group: "Arms", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Increase Strength", "Build Muscle & Mass"], instructions: "Curl dumbbells with a neutral (palms facing) grip.", advice: "Squeeze hard at the top.", gif_url: "../assets/exercises/hammer-curl.gif" },
+            { name: "Overhead Tricep Extension", description: "Hits long head of tricep.", muscle_group: "Arms", equipment: ["DUMBBELLS", "KETTLE BELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Tone Body"], instructions: "Lower weight behind head, press back up.", advice: "Keep elbows pointing straight up.", gif_url: "../assets/exercises/overhead-tricep.gif" },
+            { name: "Dips", description: "Bodyweight tricep push.", muscle_group: "Arms", equipment: ["NONE", "FULL GYM"], goals: ["Increase Strength", "Improve Athleticism"], instructions: "Lower body on parallel bars, push up.", advice: "Keep torso upright to isolate triceps.", gif_url: "../assets/exercises/dips.gif" },
+            { name: "Preacher Curls", description: "Strict bicep isolation.", muscle_group: "Arms", equipment: ["MACHINES", "BARBELLS", "FULL GYM"], goals: ["Build Muscle & Mass"], instructions: "Rest arms on pad, curl weight up.", advice: "Don't fully lock out elbows at the bottom to avoid injury.", gif_url: "../assets/exercises/preacher-curl.gif" },
+            { name: "Skull Crushers", description: "Lying tricep extension.", muscle_group: "Arms", equipment: ["BARBELLS", "DUMBBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Lie on bench. Lower bar to forehead, extend arms.", advice: "Keep elbows stationary and tucked in.", gif_url: "../assets/exercises/skull-crusher.gif" },
+            { name: "Concentration Curls", description: "Peak-building bicep curl.", muscle_group: "Arms", equipment: ["DUMBBELLS", "FULL GYM"], goals: ["Tone Body"], instructions: "Sit, rest elbow on inner thigh, curl dumbbell.", advice: "Focus heavily on the mind-muscle connection.", gif_url: "../assets/exercises/concentration-curl.gif" },
+
+            // === GLUTES (4) ===
+            { name: "Barbell Hip Thrust", description: "The ultimate glute builder.", muscle_group: "Glutes", equipment: ["BARBELLS", "FULL GYM"], goals: ["Build Muscle & Mass", "Increase Strength"], instructions: "Upper back on bench, bar across hips. Thrust hips upward.", advice: "Squeeze glutes hard at the top; keep chin tucked.", gif_url: "../assets/exercises/hip-thrust.gif" },
+            { name: "Glute Kickbacks", description: "Machine isolation for the glutes.", muscle_group: "Glutes", equipment: ["MACHINES", "FULL GYM"], goals: ["Tone Body"], instructions: "Attach cable to ankle. Kick leg straight back.", advice: "Keep lower back completely still; only move from the hip.", gif_url: "../assets/exercises/glute-kickback.gif" },
+            { name: "Cable Pull-Throughs", description: "A standing hip-hinge for glutes.", muscle_group: "Glutes", equipment: ["MACHINES", "FULL GYM"], goals: ["Improve Athleticism", "Tone Body"], instructions: "Stand facing away from cable. Pull rope through legs by thrusting hips.", advice: "This is a hinge, not a squat.", gif_url: "../assets/exercises/pull-through.gif" },
+            { name: "Sumo Squat", description: "Wide stance squat targeting glutes and inner thighs.", muscle_group: "Glutes", equipment: ["DUMBBELLS", "KETTLE BELLS", "FULL GYM"], goals: ["Tone Body", "Build Muscle & Mass"], instructions: "Take a wide stance, point toes out. Squat deeply.", advice: "Keep your chest up and push knees outward.", gif_url: "../assets/exercises/sumo-squat.gif" },
+
+            // === ABS (6) ===
+            { name: "Plank", description: "Isometric core stability.", muscle_group: "Abs", equipment: ["NONE", "FULL GYM"], goals: ["Improve Overall Fitness & Health", "Tone Body"], instructions: "Rest on forearms and toes in a straight line.", advice: "Squeeze glutes and brace abs tightly.", gif_url: "../assets/exercises/plank.gif" },
+            { name: "Russian Twists", description: "Targets the obliques.", muscle_group: "Abs", equipment: ["NONE", "DUMBBELLS", "KETTLE BELLS", "FULL GYM"], goals: ["Improve Athleticism", "Tone Body"], instructions: "Sit, lean back slightly. Twist torso side to side.", advice: "Follow your hands with your eyes.", gif_url: "../assets/exercises/russian-twist.gif" },
+            { name: "Hanging Leg Raises", description: "Advanced lower ab movement.", muscle_group: "Abs", equipment: ["MACHINES", "FULL GYM"], goals: ["Increase Strength", "Improve Athleticism"], instructions: "Hang from bar. Keeping legs straight, raise them to 90 degrees.", advice: "Do not swing. Pull with your abs.", gif_url: "../assets/exercises/leg-raise.gif" },
+            { name: "Crunches", description: "Standard abdominal contraction.", muscle_group: "Abs", equipment: ["NONE", "FULL GYM"], goals: ["Tone Body"], instructions: "Lie on back, curl shoulders off the floor.", advice: "Pull your ribcage toward your pelvis.", gif_url: "../assets/exercises/crunch.gif" },
+            { name: "Ab Wheel Rollout", description: "Extreme core extension.", muscle_group: "Abs", equipment: ["MACHINES", "FULL GYM"], goals: ["Increase Strength"], instructions: "Kneel, hold wheel, roll forward until body is extended, pull back.", advice: "Do not let your lower back sag at the bottom.", gif_url: "../assets/exercises/ab-wheel.gif" },
+            { name: "Bicycle Crunches", description: "Dynamic twisting ab movement.", muscle_group: "Abs", equipment: ["NONE", "FULL GYM"], goals: ["Lose Weight", "Tone Body"], instructions: "Lie on back. Bring opposite elbow to opposite knee.", advice: "Twist your shoulder, not just your neck.", gif_url: "../assets/exercises/bicycle-crunch.gif" }
+        ];
+
+        document.getElementById('seedBtn').addEventListener('click', async () => {
+            const statusDiv = document.getElementById('status');
+            const btn = document.getElementById('seedBtn');
+            const progBar = document.getElementById('progBar');
+            const progFill = document.getElementById('progFill');
+            
+            btn.disabled = true;
+            progBar.style.display = 'block';
+            statusDiv.innerText = "Injecting 50 elite exercises into Firestore...";
+
+            try {
+                const exercisesRef = collection(db, "exercises");
+                let count = 0;
+
+                for (const ex of exercises) {
+                    await addDoc(exercisesRef, ex);
+                    count++;
+                    
+                    let percentage = (count / exercises.length) * 100;
+                    progFill.style.width = percentage + '%';
+                    statusDiv.innerText = `Uploaded: ${count} / ${exercises.length}`;
+                }
+
+                statusDiv.innerHTML = `<span style="color: #4ade80;">Success! Database beautifully and perfectly seeded.</span>`;
+                btn.innerText = "DATABASE 100% SEEDED!";
+                
+            } catch (error) {
+                console.error("Error seeding database:", error);
+                statusDiv.innerHTML = `<span style="color: #e63946;">Error: ${error.message}</span>`;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

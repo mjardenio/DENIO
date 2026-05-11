@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO - Profile</title>
+    
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/app.css">
+    
+</head>
+<body class="app-body">
+    <div class="app-container p-30 overflow-y-auto">
+        
+        <div class="profile-header-simple">
+            <button class="circle-btn" id="pvBackBtn">&#8592;</button>
+            <img src="../assets/FLOGO.png" alt="DENIO" class="profile-logo-standard">
+        </div>
+
+        <div class="profile-avatar-area">
+            <div class="user-avatar-large" id="pvAvatar">U</div>
+            <div class="user-name-large" id="pvName">User Name</div>
+        </div>
+
+        <div class="info-list">
+            <div class="info-row"><span class="info-label">Age</span><span class="info-value" id="pvAge">--</span></div>
+            <div class="info-row"><span class="info-label">Gender</span><span class="info-value" id="pvGender">--</span></div>
+            <div class="info-row"><span class="info-label">Height / Weight</span><span class="info-value"><span id="pvHeight">--</span>cm / <span id="pvWeight">--</span>lbs</span></div>
+            <div class="info-row"><span class="info-label">Fitness Level</span><span class="info-value" id="pvLevel">--</span></div>
+            <div class="info-row"><span class="info-label">Frequency</span><span class="info-value" id="pvFreq">--</span></div>
+            <div class="info-row"><span class="info-label">Equipment</span><span class="info-value" id="pvEquip">--</span></div>
+            <div class="info-row"><span class="info-label">Focus Area</span><span class="info-value" id="pvFocus">--</span></div>
+            <div class="info-row"><span class="info-label">Goals</span><span class="info-value" id="pvGoal">--</span></div>
+        </div>
+
+        <div class="profile-action-row">
+            <button class="btn-main btn-edit" id="openEditModalBtn">EDIT INFO</button>
+            <button class="btn-main btn-signout" id="pvSignOutBtn">SIGN OUT</button>
+        </div>
+    </div>
+
+    <div class="edit-modal-overlay" id="editModal">
+        <div class="edit-modal">
+            <span class="close-modal" id="closeEditModalBtn">✕</span>
+            <div class="modal-title">Update Fitness Profile</div>
+            
+            <p class="modal-note">Note: Changing these updates future workout days while keeping today, streaks, and workout history.</p>
+
+            <div class="setup-section mt-20">
+                <label>Frequency</label>
+                <div class="btn-flex-grid" id="editFreqGroup">
+                    <button class="sel-btn" data-value="1">1</button>
+                    <button class="sel-btn" data-value="2">2</button>
+                    <button class="sel-btn" data-value="3">3</button>
+                    <button class="sel-btn" data-value="4">4</button>
+                    <button class="sel-btn" data-value="5">5</button>
+                    <button class="sel-btn" data-value="6">6</button>
+                    <button class="sel-btn" data-value="7">7</button>
+                </div>
+            </div>
+
+            <div class="setup-section mt-20">
+                <label>Equipment</label>
+                <div class="btn-flex-grid" id="editEquipGroup">
+                    <button class="sel-btn" data-value="FULL GYM">FULL GYM</button>
+                    <button class="sel-btn" data-value="BARBELLS">BARBELLS</button>
+                    <button class="sel-btn" data-value="DUMBBELLS">DUMBBELLS</button>
+                    <button class="sel-btn" data-value="KETTLE BELLS">KETTLE BELLS</button>
+                    <button class="sel-btn" data-value="MACHINES">MACHINES</button>
+                    <button class="sel-btn" data-value="NONE">NONE</button>
+                </div>
+            </div>
+
+            <div class="setup-section mt-20">
+                <label>Focus Area</label>
+                <div class="btn-flex-grid" id="editFocusGroup">
+                    <button class="sel-btn" data-value="Back">Back</button>
+                    <button class="sel-btn" data-value="Abs">Abs</button>
+                    <button class="sel-btn" data-value="Glutes">Glutes</button>
+                    <button class="sel-btn" data-value="Chest">Chest</button>
+                    <button class="sel-btn" data-value="Arms">Arms</button>
+                    <button class="sel-btn" data-value="Legs">Legs</button>
+                    <button class="sel-btn" data-value="Shoulders">Shoulders</button>
+                    <button class="sel-btn" data-value="Full Body">Full Body</button>
+                </div>
+            </div>
+
+            <div class="setup-section mt-20">
+                <label>Fitness Goals</label>
+                <div class="btn-flex-grid" id="editGoalGroup">
+                    <button class="sel-btn" data-value="Lose Weight">Lose Weight</button>
+                    <button class="sel-btn" data-value="Build Muscle & Mass">Build Muscle & Mass</button>
+                    <button class="sel-btn" data-value="Improve Athleticism">Improve Athleticism</button>
+                    <button class="sel-btn" data-value="Increase Strength">Increase Strength</button>
+                    <button class="sel-btn" data-value="Tone Body">Tone Body</button>
+                    <button class="sel-btn" data-value="Improve Overall Fitness & Health">Improve Overall Fitness & Health</button>
+                </div>
+            </div>
+            
+            <div class="auth-footer mt-20">
+                <button class="btn-main" id="generateNewRoutineBtn">GENERATE NEW ROUTINE</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

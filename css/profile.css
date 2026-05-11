@@ -1,0 +1,439 @@
+/* css/profile.css */
+
+.auth-body {
+    background: linear-gradient(360deg, #262626 50%, #8f3030 100%);
+    background-size: 200% 200%;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.auth-body::before {
+    content: '';
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    background: linear-gradient(360deg, #262626 50%, #8f3030 100%);
+    filter: blur(15px);
+    z-index: -1;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    min-height: 650px; 
+    padding: 40px 40px 100px 40px; 
+    background: linear-gradient(360deg, #111111 50%, #c91919 100%);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 0, 0, 0.6);
+}
+
+.auth-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.logo-img {
+    width: 250px; 
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.logo-subtitle { 
+    font-size: 12px; 
+    color: #999;  
+    letter-spacing: 1px;
+}
+
+.admin-subtitle {
+    font-size: 14px; 
+    font-weight: bold;
+    color: #fff;  
+    letter-spacing: 2px;
+}
+
+.divider {
+    width: 80%;
+    border: 0;
+    border-top: 3px solid rgba(255, 241, 241, 0.712);
+    margin: 25px 0;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+    width: 100%; 
+    max-width: 280px; 
+    background: #e3e3e3; 
+    color: #111111;
+    border: none; 
+    border-radius: 8px; 
+    padding: 12px 16px; 
+    margin-bottom: 12px;
+    font-size: 14px; 
+    outline: none;
+}
+
+input:focus { 
+    box-shadow: 0 0 0 2px #e63946; 
+}
+
+.action-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 280px;
+    margin-bottom: 30px;
+}
+
+.action-link { 
+    color: #999; 
+    font-size: 12px; 
+    cursor: pointer; 
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.action-link:hover { 
+    color: #e63946; 
+}
+
+.btn-primary {
+    width: 100%; 
+    max-width: 280px; 
+    background: #e63946; 
+    color: #fff;
+    font-weight: 600; 
+    padding: 12px; 
+    border-radius: 8px; 
+    border: none;
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: filter 0.2s;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.btn-primary:hover { 
+    filter: brightness(1.1); 
+}
+
+.auth-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-footer-text { 
+    color: #999; 
+    font-size: 14px; 
+}
+
+.link-btn { 
+    background: none; 
+    border: none; 
+    color: #e0e0e0; 
+    font-weight: 600; 
+    font-size: 18px; 
+    cursor: pointer; 
+}
+
+.link-btn:hover { 
+    color: #e63946; 
+}
+
+
+/*SETUP PAGE*/
+.justify-start {
+    justify-content: flex-start;
+}
+
+.setup-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.setup-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.setup-title {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.setup-title h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 32px;
+    color: #e0e0e0;
+    letter-spacing: 2px;
+}
+
+.setup-title h2.text-red {
+    color: #e63946;
+}
+
+.setup-title h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 24px;
+    color: #e0e0e0;
+    letter-spacing: 2px;
+}
+
+/* Circular Navigation Buttons */
+.circle-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 35%;
+    background: #ffffff;
+    color: #111111;
+    padding: 2px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.circle-btn:hover {
+    background: #e63946;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.empty-spacer-40 {
+    width: 40px;
+}
+
+/* Setup Sections & Inputs */
+.setup-section {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 15px;
+}
+
+.setup-section label {
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+}
+
+input[type="number"] {
+    width: 100%;
+    max-width: 280px;
+    background: #e3e3e3;
+    color: #111111;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.split-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    max-width: 280px;
+    margin-top: 15px;
+}
+
+.split-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.split-input label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+}
+
+/* Reusable Segmented Grid (Used for Gender & Frequency) */
+.segmented-grid {
+    display: flex;
+    width: 100%;
+}
+
+.segment-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: #e3e3e3;
+    color: #111111;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-right: 3px solid #2a2a2a;
+}
+
+.segment-btn:hover {
+    background: #d1d1d1;
+}
+
+.segment-btn.selected {
+    background: #e63946;
+    color: #fff;
+    border-right-color: #e63946;
+}
+
+.segment-btn:first-child {
+    border-radius: 15px 0 0 15px;
+}
+
+.segment-btn:last-child {
+    border-radius: 0 15px 15px 0;
+    border-right: none;
+}
+
+/* Setup Grid Buttons (Fitness Level) */
+.level-grid {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.level-btn {
+    flex: 1;
+    padding: 12px 5px;
+    border-radius: 8px;
+    border: none;
+    background: #e3e3e3;
+    color: #111111;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.level-btn:hover { background: #d1d1d1; }
+.level-btn.selected { background: #e63946; color: #fff; }
+
+/* Grid Buttons (Equipment) */
+.eq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.sel-btn {
+    padding: 20px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #e3e3e3;
+    color: #111111;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.sel-btn:hover { background: #d1d1d1; }
+.sel-btn.selected { background: #e63946; color: #fff; }
+
+/* Flex Grid (Focus Area & Goals) */
+.btn-flex-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn-flex-grid .sel-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    flex: 1 1 auto;
+}
+
+.full-width-btn {
+    width: 100%;
+}
+
+/* Margin/Padding Utility Classes */
+.mt-20 { margin-top: 20px; }
+.mt-35 { margin-top: 35px; }
+.mt-auto { margin-top: auto; }
+.pt-24 { padding-top: 24px; }
+.full-width { width: 100%; }
+
+/* =========================================
+   LOADING SCREEN UI
+   ========================================= */
+.hidden {
+    display: none !important;
+}
+
+.loading-wrapper {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #e63946;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 14px;
+    color: #e0e0e0;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Mobile Native App View */
+@media (max-width: 480px) {
+    .app-container, .auth-container {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding-top: env(safe-area-inset-top); /* Adjusts for iPhone notches */
+    }
+}

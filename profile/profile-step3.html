@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENIO - Profile Setup Step 3</title>
+  
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body class="auth-body">
+  <div class="auth-container justify-start">
+    
+    <div id="step3-content" class="setup-wrapper">
+      <div class="setup-header">
+        <button class="circle-btn" onclick="window.location.href='profile-step2.html'">&#8592;</button>
+        <div class="empty-spacer-40"></div> 
+      </div>
+      
+      <div class="setup-title">
+        <h2>HI!</h2>
+        <h3>SETUP YOUR PROFILE</h3>
+      </div>
+      
+      <div class="setup-section mt-20">
+        <label>Choose your focus area</label>
+        <div class="btn-flex-grid" id="focusGroup">
+          <button class="sel-btn" onclick="selectFocus(this)">Back</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Abs</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Glutes</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Chest</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Arms</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Legs</button>
+          <button class="sel-btn" onclick="selectFocus(this)">Shoulders</button>
+          <button class="sel-btn full-width-btn" onclick="selectFocus(this)">Full Body</button>
+        </div>
+      </div>
+      
+      <div class="setup-section mt-20">
+        <label>Choose your goal</label>
+        <div class="btn-flex-grid" id="goalGroup">
+          <button class="sel-btn" onclick="toggleBtn(this)">Lose Weight</button>
+          <button class="sel-btn" onclick="toggleBtn(this)">Build Muscle & Mass</button>
+          <button class="sel-btn" onclick="toggleBtn(this)">Improve Athleticism</button>
+          <button class="sel-btn" onclick="toggleBtn(this)">Increase Strength</button>
+          <button class="sel-btn" onclick="toggleBtn(this)">Tone Body</button>
+          <button class="sel-btn full-width-btn" onclick="toggleBtn(this)">Improve Overall Fitness & Health</button>
+        </div>
+      </div>
+      
+      <div class="setup-section mt-auto pt-24">
+        <button class="btn-primary" onclick="generatePlan()">Generate</button>
+      </div>
+    </div>
+
+    <div id="loading-screen" class="loading-wrapper hidden">
+      <img src="../assets/FLOGO.png" alt="DENIO Logo" class="logo-img">
+      <p class="logo-subtitle">AI-ASSISTED VIRTUAL TRAINER</p>
+      
+      <hr class="divider">
+      
+      <div class="spinner"></div>
+      <p class="loading-text">DENIO is generating your<br>personalized workout plan...</p>
+    </div>
+
+  </div>
+
+  <script src="../js/global.js"></script>
+  <script type="module" src="../js/profile.js"></script>
+
+  <script type="module">
+        import { auth, db } from "../js/firebase.js";
+        import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { generateWorkoutPlan } from "../js/ai-engine.js"; 
+
+        function isPositiveInteger(value) {
+            const number = Number(value);
+            return Number.isInteger(number) && number > 0;
+        }
+
+        document.addEventListener('triggerDenioAI', () => {
+            
+            // 🔥 FIXED: Wait for Firebase Auth to confirm the user!
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    try {
+                        const userRef = doc(db, "users", user.uid);
+                        const existingUserSnap = await getDoc(userRef);
+                        const existingUserData = existingUserSnap.exists() ? existingUserSnap.data() : {};
+                        const existingLiftDay = existingUserData.currentLiftDay || existingUserData.userProgress?.currentLiftDay;
+                        const currentLiftDay = isPositiveInteger(existingLiftDay) ? Number(existingLiftDay) : 1;
+                        const existingCompletedDays = Array.isArray(existingUserData.completedDays) ? existingUserData.completedDays : [];
+
+                        const userProfileData = {
+                            name: localStorage.getItem('denio_name'),
+                            age: localStorage.getItem('denio_age'),
+                            height: localStorage.getItem('denio_height'),
+                            weight: localStorage.getItem('denio_weight'),
+                            gender: localStorage.getItem('denio_gender'),
+                            fitnessLevel: localStorage.getItem('denio_level'),
+                            workoutFrequency: localStorage.getItem('denio_freq'),
+                            frequency: localStorage.getItem('denio_freq'), 
+                            equipment: JSON.parse(localStorage.getItem('denio_equip') || '[]'),
+                            focusAreas: JSON.parse(localStorage.getItem('denio_focus') || '[]'),
+                            goals: JSON.parse(localStorage.getItem('denio_goals') || '[]'),
+                            startDate: localStorage.getItem('denio_start_date'),
+                            email: user.email,
+                            username: user.email ? user.email.split('@')[0] : localStorage.getItem('denio_name'),
+                            profileCompleted: true, 
+                            completedDays: existingCompletedDays,
+                            currentLiftDay,
+                            currentWeekday: existingUserData.currentWeekday || new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Manila" }).format(new Date()).toUpperCase(),
+                            lastCompletedWorkout: existingUserData.lastCompletedWorkout || null,
+                            lastResetDate: existingUserData.lastResetDate || new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila" }).format(new Date()),
+                            workoutStatus: existingUserData.workoutStatus || "pending",
+                            progressionStartDate: existingUserData.progressionStartDate || localStorage.getItem('denio_start_date')
+                        };
+
+                        console.log("Database: Saving user profile...");
+                        await setDoc(userRef, userProfileData, { merge: true });
+                        
+                        const shouldGenerateFreshPlan = !existingUserData.profileCompleted &&
+                            currentLiftDay === 1 &&
+                            existingCompletedDays.length === 0;
+                        if (shouldGenerateFreshPlan) {
+                            console.log("Brain: Triggering DENIO AI Generation...");
+                            await generateWorkoutPlan(user.uid, userProfileData);
+                        } else {
+                            console.log("Brain: Existing progression detected. Skipping fresh plan generation.");
+                        }
+                        
+                        // 🔥 FIXED: Redirecting to homepage! Adjust this path if homepage is in a different folder.
+                        setTimeout(() => { 
+                            window.location.href = '../app/homepage.html'; 
+                        }, 3000); 
+
+                    } catch (error) {
+                        console.error("Critical error during generation:", error);
+                        alert("Error building plan. Check console.");
+                        window.location.reload(); 
+                    }
+                } else {
+                    console.error("Auth Error: No user is logged in!");
+                    alert("You are not logged in. Please return to the login screen.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+</body>
+</html>

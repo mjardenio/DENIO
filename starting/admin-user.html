@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO Admin - Users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/starting.css">
+</head>
+<body class="admin-light-body">
+
+    <nav class="admin-top-nav">
+        <div class="nav-left"><img src="../assets/FDLSIDE.png" class="admin-logo-dark"></div>
+        <div class="nav-center">
+            <a href="admin-dashboard.html" class="nav-link">Dashboard</a>
+            <a href="admin-user.html" class="nav-link active">User Management</a>
+            <a href="admin-library.html" class="nav-link">Exercise Library</a>
+            <a href="admin-reco.html" class="nav-link">Recommendation System</a>
+        </div>
+        <div class="nav-right">
+            <div class="notif-wrapper" id="notifWrapper"><button class="icon-btn" id="notifBtn">🕭 <span class="notif-badge" id="notifBadge">2</span></button><div class="notif-dropdown" id="notifDropdown"><div class="notif-header">Notifications</div><div class="notif-list"><div class="notif-item new"><span class="indicator"></span><div class="notif-text">New user signed up.</div></div></div></div></div>
+            <div class="profile-wrapper" id="adminProfileWrapper"><button class="icon-btn profile-btn" id="adminProfileBtn"><div class="admin-avatar-circle">A</div><span>Admin</span><small>▼</small></button><div class="profile-dropdown" id="adminDropdown"><button id="adminLogoutBtn">Sign Out</button></div></div>
+        </div>
+    </nav>
+
+    <div class="admin-main-content">
+        <div class="admin-header-flex">
+            <h2 class="admin-page-title">User <span class="text-red">Management</span></h2>
+            <div class="admin-controls-row">
+                <input type="text" class="admin-input-search" id="adminUserSearch" placeholder="Search user name...">
+                <select class="admin-select-filter" id="adminLevelFilter">
+                    <option value="all">All Fitness Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <select class="admin-select-filter" id="adminStatusFilter">
+                    <option value="all">All Status</option>
+                    <option value="active">Active / Logged In</option>
+                    <option value="offline">Offline</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="admin-card table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th class="col-center">Status</th>
+                        <th class="col-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminUserList">
+                    <tr><td colspan="3" style="text-align:center; color:#888;">Loading users...</td></tr>
+                </tbody>
+            </table>
+            <div class="admin-pagination">
+                <button class="btn-primary-admin" id="adminUsersPrev">Previous</button>
+                <span id="adminUsersPageLabel">Page 1</span>
+                <button class="btn-primary-admin" id="adminUsersNext">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="deleteUserModal">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3>Delete User</h3>
+                <button class="close-modal" id="closeDeleteUserModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:#555; margin-top:0;">Delete <strong id="deleteUserName">this user</strong> from Firestore user records?</p>
+                <p style="color:#888; font-size:13px;">Authentication account deletion requires Firebase Admin SDK/server privileges.</p>
+                <div class="admin-delete-actions">
+                    <button class="btn-primary-admin" id="cancelDeleteUserBtn" style="background:#888;">Cancel</button>
+                    <button class="btn-primary-admin" id="confirmDeleteUserBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script src="../js/starting.js"></script>
+    <script type="module" src="../js/admin-users.js"></script>
+</body>
+</html>

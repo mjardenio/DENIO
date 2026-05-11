@@ -1,0 +1,26 @@
+You are working on an existing production-style fitness web application called DENIO.
+
+IMPORTANT RULES:
+
+* DO NOT redesign or rewrite the frontend UI.
+* Preserve all existing CSS layouts, animations, and class names.
+* Only implement backend logic, Firebase integration, state management, dynamic rendering, and AI systems.
+* Reuse existing functions and DOM structure whenever possible.
+* Avoid duplicating existing code.
+* Analyze the current codebase before editing files.
+* Keep the project in Vanilla JavaScript.
+* Do NOT migrate to React, Vue, or frameworks.
+* Keep code modular and scalable.
+* Use async/await properly.
+* Use Firebase Firestore best practices.
+* Minimize Firestore reads/writes.
+* Maintain mobile responsiveness.
+* Only inject minimal HTML if necessary.
+* Add comments to all major systems.
+
+Before making changes:
+
+1. Analyze the relevant files.
+2. Explain your implementation plan.
+3. List files to modify.
+4. Then implement incrementally.

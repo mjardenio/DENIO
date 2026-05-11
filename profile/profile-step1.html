@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENIO - Profile Setup Step 1</title>
+  
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body class="auth-body">
+  <div class="auth-container justify-start">
+    
+    <div class="setup-header" style="justify-content: flex-end;">
+      <button class="circle-btn" onclick="validateProfile1()">&#8594;</button>
+    </div>
+    
+    <div class="setup-title">
+      <h2>HI!</h2>
+      <h3>SETUP YOUR PROFILE</h3>
+    </div>
+    
+    <div class="setup-section">
+      <label>Name</label>
+      <input type="text" id="profileName" placeholder="Enter your name">
+    </div>
+    
+    <div class="setup-section">
+      <label>Gender</label>
+      <div class="segmented-grid" id="genderGroup">
+        <button class="segment-btn" onclick="selectGender(this)">MALE</button>
+        <button class="segment-btn" onclick="selectGender(this)">FEMALE</button>
+      </div>
+    </div>
+    
+    <div class="setup-section">
+      <label>Age</label>
+      <input type="number" id="profileAge" placeholder="Enter your age">
+    </div>
+    
+    <div class="split-row">
+      <div class="split-input">
+        <label>Height (cm)</label>
+        <input type="number" id="profileHeight" placeholder="Height">
+      </div>
+      <div class="split-input">
+        <label>Weight (lbs)</label>
+        <input type="number" id="profileWeight" placeholder="Weight">
+      </div>
+    </div>
+    
+    <div class="setup-section">
+      <label>Fitness Level</label>
+      <div class="level-grid" id="levelGroup">
+        <button class="level-btn" onclick="selectLevel(this)">Beginner</button>
+        <button class="level-btn" onclick="selectLevel(this)">Intermediate</button>
+        <button class="level-btn" onclick="selectLevel(this)">Advanced</button>
+      </div>
+    </div>
+    
+  </div>
+
+  <script src="../js/global.js"></script>
+  <script type="module" src="../js/profile.js"></script>
+</body>
+</html>

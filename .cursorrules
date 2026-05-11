@@ -1,0 +1,38 @@
+You are working on an existing fitness web application called DENIO.
+
+IMPORTANT RULES:
+
+* DO NOT redesign or rewrite the existing UI/CSS layouts.
+* Preserve all current styling, component structures, HTML hierarchy, and animations.
+* Reuse existing functions and variables whenever possible.
+* Only improve or connect backend logic, Firebase integration, state management, and dynamic rendering.
+* Do NOT duplicate existing logic if already partially implemented.
+* Analyze the entire codebase first before modifying files.
+* Keep the current design aesthetic fully intact.
+* Replace placeholder data with real dynamic data from Firebase or localStorage.
+* Maintain modular clean code structure.
+* Keep all new logic scalable and production-ready.
+* Use async/await properly.
+* Add comments for all major systems and functions.
+* Ensure all features work on mobile screens.
+* Preserve existing CSS class names unless absolutely necessary.
+* If modifying HTML, only inject minimal required elements.
+* Maintain compatibility with Firebase Authentication and Firestore.
+
+Project stack:
+
+* HTML
+* CSS
+* Vanilla JavaScript
+* Firebase Authentication
+* Firestore Database
+
+The app already contains:
+
+* Existing layouts and CSS
+* Firebase auth setup
+* AI workout recommendation logic
+* Placeholder pages and UI
+* Some partial functions and animations
+
+Your role is to complete the backend logic, dynamic rendering, state management, Firebase integration, AI behavior systems, and admin systems while preserving the current frontend design.

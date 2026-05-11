@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO - Chatbot</title>
+    
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body class="app-body">
+    <div class="app-container pb-60">
+        
+        <div class="chat-header">
+            <div class="chat-title">CHATBOT DENIO</div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="msg-bubble msg-user">
+                Is it better to do cardio before or after workout?
+            </div>
+            <div class="msg-bubble msg-ai">
+                Whether to do cardio before or after a workout depends on your primary goal. For building strength or muscle, lift weights first to maximize your energy output.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" class="chat-input" id="userInput" placeholder="Ask Denio a question...">
+            <button class="chat-send" onclick="sendMessage()">➤</button>
+        </div>
+
+        <div class="bottom-nav z-10">
+            <button class="nav-btn" onclick="window.location.href='homepage.html'">
+                <div class="nav-icon">🏠︎</div>Home
+            </button>
+            <button class="nav-btn" onclick="window.location.href='summary-page.html'">
+                <div class="nav-icon">☰</div>Summary
+            </button>
+            <button class="nav-btn" onclick="window.location.href='library-page.html'">
+                <div class="nav-icon">🕮</div>Library
+            </button>
+            <button class="nav-btn active" onclick="window.location.href='chat-page.html'">
+                <div class="nav-icon">🗫</div>Chat
+            </button>
+        </div>
+        
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

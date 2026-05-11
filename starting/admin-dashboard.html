@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO Admin - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/starting.css">
+</head>
+<body class="admin-light-body">
+
+    <nav class="admin-top-nav">
+        <div class="nav-left">
+            <img src="../assets/FDLSIDE.png" alt="DENIO" class="admin-logo-dark">
+        </div>
+        <div class="nav-center">
+            <a href="admin-dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="admin-user.html" class="nav-link">User Management</a>
+            <a href="admin-library.html" class="nav-link">Exercise Library</a>
+            <a href="admin-reco.html" class="nav-link">Recommendation System</a>
+        </div>
+        <div class="nav-right">
+            <div class="notif-wrapper" id="notifWrapper">
+                <button class="icon-btn" id="notifBtn">🕭 <span class="notif-badge" id="notifBadge">2</span></button>
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-header">Notifications</div>
+                    <div class="notif-list">
+                        <div class="notif-item new"><span class="indicator"></span><div class="notif-text">New user <b>John Doe</b> signed up.</div></div>
+                        <div class="notif-item new"><span class="indicator"></span><div class="notif-text">User <b>JaneS</b> logged in.</div></div>
+                        <div class="notif-item old"><span class="indicator"></span><div class="notif-text">User <b>MarkA</b> logged out.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-wrapper" id="adminProfileWrapper">
+                <button class="icon-btn profile-btn" id="adminProfileBtn">
+                    <div class="admin-avatar-circle">A</div>
+                    <span>Admin</span><small>▼</small>
+                </button>
+                <div class="profile-dropdown" id="adminDropdown">
+                    <button id="adminLogoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-main-content">
+        <h2 class="admin-page-title">System <span class="text-red">Analytics</span></h2>
+        
+        <div class="admin-stats-row">
+            <div class="admin-card">
+                <div class="stat-title">Total Users</div>
+                <div class="stat-value" id="totalUsersMetric">0</div>
+            </div>
+            <div class="admin-card">
+                <div class="stat-title">Active Users</div>
+                <div class="stat-value" id="activeUsersMetric">0</div>
+            </div>
+            <div class="admin-card">
+                <div class="stat-title">Session Completion</div>
+                <div class="stat-value text-green" id="sessionCompletionMetric">0%</div>
+            </div>
+            <div class="admin-card">
+                <div class="stat-title">Missed Workouts</div>
+                <div class="stat-value text-red" id="missedWorkoutsMetric">0%</div>
+            </div>
+            <div class="admin-card">
+                <div class="stat-title">Average Workout Duration</div>
+                <div class="stat-value" id="avgDurationMetric">0 min</div>
+            </div>
+        </div>
+
+        <div class="admin-card mb-20">
+            <div class="chart-header">User Growth</div>
+            <div class="placeholder-graph" id="userGrowthChart">Loading real Firebase data...</div>
+        </div>
+
+        <div class="admin-charts-grid">
+            <div class="admin-card">
+                <div class="chart-header">Fitness Goals</div>
+                <div class="placeholder-pie" id="fitnessGoalsChart">Loading...</div>
+            </div>
+            <div class="admin-card">
+                <div class="chart-header">Body Goals</div>
+                <div class="placeholder-pie" id="muscleGoalsChart">Loading...</div>
+            </div>
+            <div class="admin-card">
+                <div class="chart-header">Fitness Level</div>
+                <div class="placeholder-pie" id="fitnessLevelChart">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script src="../js/starting.js"></script>
+    <script type="module" src="../js/admin-dashboard.js"></script>
+</body>
+</html>

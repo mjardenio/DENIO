@@ -1,0 +1,128 @@
+This project is already functional and already contains:
+
+Firebase integration
+AI implementation
+HTML pages
+CSS files
+JS logic
+Existing database structure
+Existing modals/components
+Existing workout systems
+Existing admin systems
+
+The objective is NOT to rebuild the application.
+
+The objective is to:
+
+polish the system
+synchronize all pages
+fix persistence issues
+refine AI logic
+improve UI/UX
+clean up workflows
+improve responsiveness
+improve analytics accuracy
+
+while preserving the current architecture.
+
+GLOBAL DEVELOPMENT RULES
+
+1. DO NOT REBUILD EXISTING SYSTEMS
+
+Do NOT rewrite:
+
+Firebase structure
+AI implementation
+authentication system
+routing
+layouts
+existing components
+existing styling system
+
+Only refine and improve them.
+
+2. REUSE EXISTING LOGIC
+
+Reuse:
+
+current JS utilities
+Firebase helper methods
+modal components
+CSS classes
+event listeners
+AI functions
+existing reusable UI
+
+Avoid:
+
+duplicate functions
+duplicate listeners
+unnecessary new files
+
+3. PRIORITIZE SYNCHRONIZATION
+
+All exercise/workout/user updates must instantly reflect across:
+
+homepage
+session page
+library page
+summary page
+result page
+admin dashboard
+
+Especially:
+
+exercise edits
+exercise deletion
+AI modifications
+workout completion
+analytics
+notifications
+user deletion
+
+4. PRESERVE RESPONSIVENESS & BRANDING
+
+Do not break:
+
+mobile responsiveness
+desktop responsiveness
+spacing consistency
+typography consistency
+current branding/colors
+modal styling
+card styling
+
+5. FILE ANALYSIS RULE
+
+Before modifying anything, first analyze:
+
+linked JS files
+related Firebase calls
+related CSS
+shared reusable components
+event listeners
+localStorage/sessionStorage usage
+AI generation logic
+chart rendering logic
+
+Do NOT patch blindly.
+
+6. FINAL APP TARGET
+
+The final application should feel:
+
+smooth
+synchronized
+polished
+intelligent
+responsive
+production-ready
+
+without changing the original architecture.
+
+Before coding:
+
+* explain implementation plan
+* explain dependencies
+* explain potential conflicts
+* then implement step-by-step safely

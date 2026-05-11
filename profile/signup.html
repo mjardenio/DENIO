@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENIO - Sign Up</title>
+  
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body class="auth-body">
+  <div class="auth-container">
+    <div class="auth-wrapper">
+      
+      <img src="../assets/FLOGO.png" alt="DENIO Logo" class="logo-img">
+      <p class="logo-subtitle">CREATE YOUR ACCOUNT</p>
+      
+      <hr class="divider">
+      
+      <input type="text" id="signupName" placeholder="Full Name">
+      <input type="email" id="signupEmail" placeholder="Email Address">
+      <input type="password" id="signupPassword" placeholder="Password">
+      <input type="password" id="signupConfirm" placeholder="Confirm Password">
+      
+      <button id="signupBtn" class="btn-primary">SIGN UP</button>
+      
+      <div class="auth-footer">
+        <p class="auth-footer-text">Already have an account?</p>
+        <button class="link-btn" onclick="window.location.href='login.html'">Login</button>
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="../js/global.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+</body>
+</html>

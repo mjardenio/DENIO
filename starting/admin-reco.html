@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENIO Admin - Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/starting.css">
+</head>
+<body class="admin-light-body">
+
+    <nav class="admin-top-nav">
+        <div class="nav-left"><img src="../assets/FDLSIDE.png" class="admin-logo-dark"></div>
+        <div class="nav-center">
+            <a href="admin-dashboard.html" class="nav-link">Dashboard</a>
+            <a href="admin-user.html" class="nav-link">User Management</a>
+            <a href="admin-library.html" class="nav-link">Exercise Library</a>
+            <a href="admin-reco.html" class="nav-link active">Recommendation System</a>
+        </div>
+        <div class="nav-right">
+            <div class="notif-wrapper" id="notifWrapper"><button class="icon-btn" id="notifBtn">🕭 <span class="notif-badge" id="notifBadge">2</span></button><div class="notif-dropdown" id="notifDropdown"><div class="notif-header">Notifications</div><div class="notif-list"><div class="notif-item new"><span class="indicator"></span><div class="notif-text">New user signed up.</div></div></div></div></div>
+            <div class="profile-wrapper" id="adminProfileWrapper"><button class="icon-btn profile-btn" id="adminProfileBtn"><div class="admin-avatar-circle">A</div><span>Admin</span><small>▼</small></button><div class="profile-dropdown" id="adminDropdown"><button id="adminLogoutBtn">Sign Out</button></div></div>
+        </div>
+    </nav>
+
+    <div class="admin-main-content">
+        <div class="admin-header-flex">
+            <h2 class="admin-page-title">Recommendation <span class="text-red">Rules</span></h2>
+            <button class="btn-primary-admin" id="addRuleBtn">+ Add Rule</button>
+        </div>
+
+        <div class="admin-card table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Rule Description</th>
+                        <th class="col-center">Priority</th>
+                        <th class="col-center">Status</th>
+                        <th class="col-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminRulesList">
+                    <tr><td colspan="4" style="text-align:center; color:#888;">Loading rules...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="ruleModal">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3>Configure Logic</h3>
+                <button class="close-modal" id="closeRuleModal">✖</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <input type="hidden" id="ruleIdInput">
+                <input type="text" class="admin-input-full" id="ruleTitleInput" placeholder="Rule title">
+                
+                <p class="modal-subtitle">If Goal:</p>
+                <div class="chip-container" id="ruleGoalGroup">
+                    <div class="admin-chip active" data-value="Any">Any</div>
+                    <div class="admin-chip" data-value="Lose Weight">Lose Weight</div>
+                    <div class="admin-chip" data-value="Build Muscle & Mass">Build Muscle & Mass</div>
+                    <div class="admin-chip" data-value="Improve Athleticism">Improve Athleticism</div>
+                    <div class="admin-chip" data-value="Increase Strength">Increase Strength</div>
+                    <div class="admin-chip" data-value="Tone Body">Tone Body</div>
+                    <div class="admin-chip" data-value="Improve Overall Fitness & Health">Improve Overall Fitness & Health</div>
+                </div>
+
+                <p class="modal-subtitle mt-20">And If Focus:</p>
+                <div class="chip-container" id="ruleMuscleGroup">
+                    <div class="admin-chip active" data-value="Any">Any</div>
+                    <div class="admin-chip" data-value="Abs">Abs</div>
+                    <div class="admin-chip" data-value="Arms">Arms</div>
+                    <div class="admin-chip" data-value="Back">Back</div>
+                    <div class="admin-chip" data-value="Chest">Chest</div>
+                    <div class="admin-chip" data-value="Glutes">Glutes</div>
+                    <div class="admin-chip" data-value="Legs">Legs</div>
+                    <div class="admin-chip" data-value="Shoulders">Shoulders</div>
+                    <div class="admin-chip" data-value="Full Body">Full Body</div>
+                </div>
+                
+                <p class="modal-subtitle">Fitness Level:</p>
+                <select class="admin-input-full" id="ruleLevelInput">
+                    <option>Any</option>
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                </select>
+
+                <textarea class="admin-textarea mt-20" id="ruleDescriptionInput" placeholder="Rule logic output description (e.g. Prioritize hypertrophy with gradual overload)"></textarea>
+
+                <p class="modal-subtitle mt-20">Priority Level:</p>
+                <select class="admin-input-full" id="rulePriorityInput">
+                    <option value="1">Low</option>
+                    <option value="3">High</option>
+                </select>
+
+                <button class="btn-primary-admin mt-20" id="saveRuleBtn" style="width: 100%;">Save Rule</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="deleteRuleModal">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3>Delete Rule</h3>
+                <button class="close-modal" id="closeDeleteRuleModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:#555; margin-top:0;">Delete <strong id="deleteRuleName">this rule</strong> from the AI recommendation system?</p>
+                <p style="color:#888; font-size:13px;">Future routine generation will stop reading this rule immediately.</p>
+                <div class="admin-delete-actions">
+                    <button class="btn-primary-admin" id="cancelDeleteRuleBtn" style="background:#888;">Cancel</button>
+                    <button class="btn-primary-admin" id="confirmDeleteRuleBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/global.js"></script>
+    <script src="../js/starting.js"></script>
+    <script type="module" src="../js/admin-reco.js"></script>
+</body>
+</html>
